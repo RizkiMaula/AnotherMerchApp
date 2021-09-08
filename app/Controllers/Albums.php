@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use \App\Models\AlbumsModel;
+use \App\Models\AlbumsModel;;
 
 class Albums extends BaseController
 {
@@ -14,21 +14,10 @@ class Albums extends BaseController
 
     public function index()
     {
-        // $guns = $this->gunsModel->findAll();
         $data = [
             'title' => "Albums",
             'albums' => $this->AlbumsModel->getAlbums()
         ];
-
-        //konek db tanpa model
-        // $db = \Config\Database::connect();
-        // $guns = $db->query("SELECT * FROM gunsnroses");
-        // foreach ($guns->getResultArray() as $row) {
-        //     d($row);
-        // }
-
-        //konek pakai model
-        // $gunsModel = new GunsModel();
 
         return view('albums/index', $data);
     }
@@ -42,6 +31,89 @@ class Albums extends BaseController
 
         ];
 
+        if (empty($data['albums'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Album ' . $slug . ' not found.');
+        }
+
         return view('albums/details', $data);
+    }
+
+
+
+    public function create()
+    {
+        // session();
+        $data = [
+            'title' => "New Album Inserted",
+            'validation' => \Config\Services::validation()
+        ];
+
+        return view('albums/create', $data);
+    }
+
+    public function save()
+    {
+        //validation
+        if (!$this->validate([
+            'title' => [
+                'rules' => 'required|is_unique[albums.title]',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'is_unique' => '{field} already exist',
+                ]
+            ],
+            'artist' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field}  must be filled',
+                ]
+            ],
+            'releaseyear' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'numeric' => 'better filled by number',
+                ]
+            ],
+            'label' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                ]
+            ],
+            'cover' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                ]
+            ],
+            'price' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'numeric' => 'better filled by number',
+                ]
+            ],
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/Albums/create')->withInput()->with('validation', $validation);
+        }
+
+        $slug = url_title($this->request->getVar('title'), '-', true);
+
+        $this->AlbumsModel->save([
+            'title' => $this->request->getVar('title'),
+            'slug' => $slug,
+            'artist' => $this->request->getVar('artist'),
+            'releaseyear' => $this->request->getVar('releaseyear'),
+            'label' => $this->request->getVar('label'),
+            'cover' => $this->request->getVar('cover'),
+            'price' => $this->request->getVar('price'),
+        ]);
+
+        session()->setFlashdata('message', 'Data Has Been Inserted.');
+
+
+        return redirect()->to('/albums');
     }
 }

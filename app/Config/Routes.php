@@ -33,7 +33,10 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
 
+// details routes
 $routes->get('/albums/(:segment)', 'Albums::detail/$1');
+$routes->get('/guitars/(:segment)', 'Guitars::detail/$1');
+
 
 
 /*

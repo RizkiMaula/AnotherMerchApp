@@ -8,20 +8,19 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="/img/<?= $albums['cover']; ?>" class="img-fluid rounded-start" alt="...">
+                        <img src="/img/<?= $guitars['img']; ?>" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $albums['title']; ?></h5>
-                            <p class="card-text"><small class="text-muted">Rp.<?= $albums['price']; ?></small></p>
-                            <p class="card-text"><b>Realise Year: </b> <?= $albums['releaseyear']; ?></p>
-                            <p class="card-text"><b>Artist: </b> <?= $albums['artist']; ?></p>
-                            <p class="card-text"><b>Label: </b> <?= $albums['label']; ?></p>
+                            <h5 class="card-title"><?= $guitars['type']; ?></h5>
+                            <p class="card-text"><small class="text-muted">Rp.<?= $guitars['price']; ?></small></p>
+                            <p class="card-text"><b>Vendor: </b> <?= $guitars['vendor']; ?></p>
 
                             <a href="" class="btn btn-warning">Edit</a>
                             <a href="" class="btn btn-danger">Delete</a>
                             <br><br>
-                            <a href="/albums"><i class="fas fa-chevron-left"> Back</i></a>
+
+                            <a href="/guitars"><i class="fas fa-chevron-left"> Back</i></a>
                         </div>
                     </div>
                 </div>

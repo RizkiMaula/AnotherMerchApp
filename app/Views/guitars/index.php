@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a href="/Albums/create" class="btn btn-primary my-3">Create new Data</a>
-            <h1 class="mt-2">Album Collections</h1>
+            <a href="/Guitars/create" class="btn btn-primary my-3">Create new Data</a>
+            <h1 class="mt-2">Guitar Collections</h1>
             <?php if (session()->getFlashdata('message')) : ?>
                 <div class="alert alert-success" role="alert">
                     <?= session()->getFlashdata('message'); ?>
@@ -15,22 +15,22 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Cover</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Artist</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Vendor</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($albums as $album) : ?>
+                    <?php foreach ($guitars as $guitar) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><img src="/img/<?= $album['cover']; ?>" alt="" class="cover"></td>
-                            <td><?= $album['title']; ?></td>
-                            <td><?= $album['artist']; ?></td>
+                            <td><img src="/img/<?= $guitar['img']; ?>" alt="" class="cover"></td>
+                            <td><?= $guitar['type']; ?></td>
+                            <td><?= $guitar['vendor']; ?></td>
                             <td>
-                                <a href="/albums/<?= $album['slug']; ?>" class="btn btn-success">Details</a>
+                                <a href="/guitars/<?= $guitar['slug']; ?>" class="btn btn-success">Details</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -5,24 +5,23 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1 class="mb-5">Our Products</h1>
-            <h5 class="mb-3">Products Overview</h5>
+            <h1 class="mb-5">Products Overview</h1>
             <div class="d-flex justify-content-evenly mb-4">
                 <div class="card" style="width: 18rem;">
                     <img src="/img/BeatlesAbbey.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Albums</h5>
-                        <p class="card-text">Music albums from various artists and solo singers make your day happy and boosting your mood.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <p class="card-text">Music albums from various artists and solo singers make your day great and boosting your mood.</p>
+                        <a href="/albums" class="btn btn-primary">Show More</a>
                     </div>
                 </div>
 
                 <div class="card" style="width: 18rem;">
-                    <img src="/img/GNRAppetite.jpg" class="card-img-top" alt="Appetite for Destruction">
+                    <img src="/img/Slash.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Guns N Roses: Appetite for Destruction</h5>
-                        <h6 class="card-title text-muted">$14.99</h6>
-                        <a href="#" class="btn btn-primary">Details</a>
+                        <h5 class="card-title">Guitars</h5>
+                        <p class="card-text">Guitars make a great music like an angel fall down from heaven if its played by great musician.</p>
+                        <a href="/guitars" class="btn btn-primary">Show More</a>
                     </div>
                 </div>
             </div>
