@@ -18,8 +18,14 @@
                             <p class="card-text"><b>Artist: </b> <?= $albums['artist']; ?></p>
                             <p class="card-text"><b>Label: </b> <?= $albums['label']; ?></p>
 
-                            <a href="" class="btn btn-warning">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                            <a href="/albums/edit/<?= $albums['slug']; ?>" class="btn btn-warning">Edit</a>
+
+                            <form action="/albums/<?= $albums['id']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete this data')">Delete</button>
+                            </form>
+
                             <br><br>
                             <a href="/albums"><i class="fas fa-chevron-left"> Back</i></a>
                         </div>

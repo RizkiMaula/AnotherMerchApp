@@ -116,4 +116,91 @@ class Albums extends BaseController
 
         return redirect()->to('/albums');
     }
+
+    public function Delete($id)
+    {
+        $this->AlbumsModel->delete($id);
+
+        session()->setFlashdata('message', 'Data Has Been Deleted.');
+
+        return redirect()->to('/albums');
+    }
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => "Album Edit",
+            'validation' => \Config\Services::validation(),
+            'albums' => $this->AlbumsModel->getAlbums($slug)
+        ];
+
+        return view('albums/edit', $data);
+    }
+
+    public function update($id)
+    {
+        //validation
+        if (!$this->validate([
+            'title' => [
+                'rules' => 'required|is_unique[albums.title,id{id}]',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'is_unique' => '{field} already exist',
+                ]
+            ],
+            'artist' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field}  must be filled',
+                ]
+            ],
+            'releaseyear' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'numeric' => 'better filled by number',
+                ]
+            ],
+            'label' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                ]
+            ],
+            'cover' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                ]
+            ],
+            'price' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} must be filled',
+                    'numeric' => 'better filled by number',
+                ]
+            ],
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/Albums/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+        }
+
+        $slug = url_title($this->request->getVar('title'), '-', true);
+
+        $this->AlbumsModel->save([
+            'id' => $id,
+            'title' => $this->request->getVar('title'),
+            'slug' => $slug,
+            'artist' => $this->request->getVar('artist'),
+            'releaseyear' => $this->request->getVar('releaseyear'),
+            'label' => $this->request->getVar('label'),
+            'cover' => $this->request->getVar('cover'),
+            'price' => $this->request->getVar('price'),
+        ]);
+
+        session()->setFlashdata('message', 'Data Has Been Inserted.');
+
+
+        return redirect()->to('/albums');
+    }
 }

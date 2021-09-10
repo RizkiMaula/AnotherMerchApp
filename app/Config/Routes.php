@@ -33,9 +33,15 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
 
+//delete routes
+$routes->delete('/albums/(:num)', 'Albums::delete/$1');
+
+//edit routes
+$routes->get('/albums/edit/(:segment)', 'Albums::edit/$1');
+
 // details routes
-$routes->get('/albums/(:segment)', 'Albums::detail/$1');
-$routes->get('/guitars/(:segment)', 'Guitars::detail/$1');
+$routes->get('/albums/(:any)', 'Albums::detail/$1');
+$routes->get('/guitars/(:any)', 'Guitars::detail/$1');
 
 
 
