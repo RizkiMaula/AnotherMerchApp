@@ -2,6 +2,13 @@
 
 namespace App\Controllers;
 
+// namespace src\autoload;
+
+// use \Faker\Factory;
+// when installed via composer
+// use vendor\autoload;
+// require_once 'vendor/autoload.php';
+
 class Pages extends BaseController
 {
     public function index()
