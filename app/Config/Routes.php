@@ -35,9 +35,11 @@ $routes->get('/', 'Pages::index');
 
 //delete routes
 $routes->delete('/albums/(:num)', 'Albums::delete/$1');
+$routes->delete('/guitars/(:num)', 'Guitars::delete/$1');
 
 //edit routes
 $routes->get('/albums/edit/(:segment)', 'Albums::edit/$1');
+$routes->get('/guitars/edit/(:segment)', 'Guitars::edit/$1');
 
 // details routes
 $routes->get('/albums/(:any)', 'Albums::detail/$1');

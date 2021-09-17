@@ -82,9 +82,12 @@ class Albums extends BaseController
                 ]
             ],
             'cover' => [
-                'rules' => 'required',
+                'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/png,image/jpg,image/jpeg]',
                 'errors' => [
-                    'required' => '{field} must be filled',
+                    'max_size' => "pict size doens't fit",
+                    'is_image' => "This file doesn't a pict",
+                    'mime_in' => "This file doesn't a pict",
+
                 ]
             ],
             'price' => [
@@ -95,9 +98,26 @@ class Albums extends BaseController
                 ]
             ],
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/Albums/create')->withInput()->with('validation', $validation);
+            // $validation = \Config\Services::validation();
+            // return redirect()->to('/Albums/create')->withInput()->with('validation', $validation);
+            return redirect()->to('/Albums/create')->withInput();
         }
+
+        //get pict
+        $getpict = $this->request->getFile('cover');
+
+        //is pict upload?
+
+        if ($getpict->getError() == 4) {
+            $pictname = 'adefault.jpg';
+        } else {
+            //generate random name
+            $pictname = $getpict->getRandomName();
+
+            //move pict to img folder
+            $getpict->move('img', $pictname);
+        }
+
 
         $slug = url_title($this->request->getVar('title'), '-', true);
 
@@ -107,7 +127,7 @@ class Albums extends BaseController
             'artist' => $this->request->getVar('artist'),
             'releaseyear' => $this->request->getVar('releaseyear'),
             'label' => $this->request->getVar('label'),
-            'cover' => $this->request->getVar('cover'),
+            'cover' => $pictname,
             'price' => $this->request->getVar('price'),
         ]);
 
@@ -117,8 +137,18 @@ class Albums extends BaseController
         return redirect()->to('/albums');
     }
 
-    public function Delete($id)
+    public function delete($id)
     {
+
+        //find image by id
+        $img = $this->AlbumsModel->find($id);
+
+        //if img = default
+        if ($img['cover'] != 'adefault.jpg') {
+            //delete image
+            unlink('img/' . $img['cover']);
+        }
+
         $this->AlbumsModel->delete($id);
 
         session()->setFlashdata('message', 'Data Has Been Deleted.');
@@ -142,7 +172,7 @@ class Albums extends BaseController
         //validation
         if (!$this->validate([
             'title' => [
-                'rules' => 'required|is_unique[albums.title,id{id}]',
+                'rules' => 'required|is_unique[albums.title,slug,{slug}]',
                 'errors' => [
                     'required' => '{field} must be filled',
                     'is_unique' => '{field} already exist',
@@ -168,9 +198,12 @@ class Albums extends BaseController
                 ]
             ],
             'cover' => [
-                'rules' => 'required',
+                'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/png,image/jpg,image/jpeg]',
                 'errors' => [
-                    'required' => '{field} must be filled',
+                    'max_size' => "pict size doens't fit",
+                    'is_image' => "This file doesn't a pict",
+                    'mime_in' => "This file doesn't a pict",
+
                 ]
             ],
             'price' => [
@@ -181,8 +214,21 @@ class Albums extends BaseController
                 ]
             ],
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/Albums/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+            return redirect()->to('/Albums/edit/' . $this->request->getVar('slug'))->withInput();
+        }
+
+        $coverFile = $this->request->getFile('cover');
+
+        //is still using old cover?
+        if ($coverFile->getError() == 4) {
+            $cover = $this->request->getVar('oldCover');
+        } else {
+            //generate random file name
+            $cover = $coverFile->getRandomName();
+            //upload cover
+            $coverFile->move('img', $cover);
+            //delete old file
+            unlink('img/' . $this->request->getVar('oldCover'));
         }
 
         $slug = url_title($this->request->getVar('title'), '-', true);
@@ -194,11 +240,11 @@ class Albums extends BaseController
             'artist' => $this->request->getVar('artist'),
             'releaseyear' => $this->request->getVar('releaseyear'),
             'label' => $this->request->getVar('label'),
-            'cover' => $this->request->getVar('cover'),
+            'cover' => $cover,
             'price' => $this->request->getVar('price'),
         ]);
 
-        session()->setFlashdata('message', 'Data Has Been Inserted.');
+        session()->setFlashdata('message', 'Data Has Been Updated.');
 
 
         return redirect()->to('/albums');

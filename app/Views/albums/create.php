@@ -5,7 +5,7 @@
     <div class="col-8">
         <div class="row">
             <h1 class="my-3">Create New Album Data</h1>
-            <form action="/Albums/save" method="post">
+            <form action="/Albums/save" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
                     <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -46,9 +46,14 @@
                 <div class=" row mb-3">
                     <label for="cover" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" value="<?= old('cover'); ?>">
-                        <div id="validationServer03Feedback" class="invalid-feedback">
-                            <?= $validation->getError('cover'); ?>.
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="cover" name="cover" onchange="previewImg()">
+                            <div id="validationServerFeedback" class="invalid-feedback">
+                                <?= $validation->getError('cover'); ?>.
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <img src="/img/adefault.jpg" class="img-thumbnail img-preview" style="height: 100px; width: 100px;">
                         </div>
                     </div>
                 </div>

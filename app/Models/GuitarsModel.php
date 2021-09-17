@@ -8,7 +8,7 @@ class GuitarsModel extends Model
 {
     protected $table = "guitars";
     protected $useTimestamps = true;
-    protected $allowedFields = ['type', 'slug', 'img', 'price'];
+    protected $allowedFields = ['type', 'slug', 'vendor',  'img', 'price'];
 
     public function getGuitars($slug = false)
     {

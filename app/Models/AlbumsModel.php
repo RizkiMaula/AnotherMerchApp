@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class AlbumsModel extends Model
 {
     protected $table = "albums";
-    protected $useTimestamps = "true";
+    protected $useTimestamps = true;
     protected $allowedFields = ['title', 'slug', 'artist', 'releaseyear', 'label', 'cover', 'price'];
 
     public function getAlbums($slug = false)
