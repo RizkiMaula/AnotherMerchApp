@@ -20,8 +20,6 @@ class Customers extends BaseController
     {
         $currentPage = $this->request->getVar('page_customer') ? $this->request->getVar('page_customer') : 1;
 
-        // d($this->request->getVar("keyword"));
-
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
             $customer = $this->CustomersModel->search($keyword);
