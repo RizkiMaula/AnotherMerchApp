@@ -42,11 +42,12 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Catalog
+                                More
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/albums">Albums</a></li>
                                 <li><a class="dropdown-item" href="/guitars">Guitars</a></li>
+                                <li><a class="dropdown-item" href="/customers">Customers</a></li>
                                 <li>
                             </ul>
                         </li>
