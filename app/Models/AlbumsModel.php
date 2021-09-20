@@ -18,4 +18,9 @@ class AlbumsModel extends Model
 
         return $this->where(['slug' => $slug])->first();
     }
+
+    public function search($keyword)
+    {
+        return $this->table('albums')->like('title', $keyword)->orLike('artist', $keyword)->orLike('releaseyear', $keyword)->orLike('label', $keyword)->orLike('price', $keyword);
+    }
 }

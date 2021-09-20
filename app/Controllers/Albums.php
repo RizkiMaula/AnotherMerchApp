@@ -14,9 +14,24 @@ class Albums extends BaseController
 
     public function index()
     {
+        $currentPage = $this->request->getVar('page_albums') ? $this->request->getVar('page_albums') : 1;
+
+        // d($this->request->getVar('keyword'));
+
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $albums = $this->AlbumsModel->search($keyword);
+        } else {
+            $albums = $this->AlbumsModel;
+        }
+
+
         $data = [
             'title' => "Albums",
-            'albums' => $this->AlbumsModel->getAlbums()
+            // 'albums' => $this->AlbumsModel->getAlbums(),
+            'albums' => $albums->paginate(5, 'albums'),
+            'pager' => $this->AlbumsModel->pager,
+            'currentPage' => $currentPage,
         ];
 
         return view('albums/index', $data);
