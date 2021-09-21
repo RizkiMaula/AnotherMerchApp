@@ -18,4 +18,9 @@ class GuitarsModel extends Model
 
         return $this->where(['slug' => $slug])->first();
     }
+
+    public function search($keyword)
+    {
+        return $this->table('guitars')->like('type', $keyword)->orLike('vendor', $keyword)->orLike('price', $keyword);
+    }
 }

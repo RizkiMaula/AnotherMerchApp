@@ -15,9 +15,22 @@ class Guitars extends BaseController
 
     public function index()
     {
+
+        $currentPage = $this->request->getVar('page_guitars') ? $this->request->getVar('page_guitars') : 1;
+
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $guitar = $this->GuitarsModel->search($keyword);
+        } else {
+            $guitar = $this->GuitarsModel;
+        }
+
         $data = [
             'title' => "Guitars",
-            'guitars' => $this->GuitarsModel->getGuitars()
+            // 'guitars' => $this->GuitarsModel->getGuitars()
+            'guitars' => $guitar->paginate(5, 'guitars'),
+            'pager' => $this->GuitarsModel->pager,
+            'currentPage' => $currentPage,
         ];
 
         return view('guitars/index', $data);

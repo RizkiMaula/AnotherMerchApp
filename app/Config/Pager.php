@@ -25,7 +25,8 @@ class Pager extends BaseConfig
 		'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
 		'default_head'   => 'CodeIgniter\Pager\Views\default_head',
 		'customers_pagination' => 'App\Views\Pagers\customers_pagination',
-		'albums_pagination' => 'App\Views\Pagers\albums_pagination'
+		'albums_pagination' => 'App\Views\Pagers\albums_pagination',
+		'guitars_pagination' => 'App\Views\Pagers\guitars_pagination'
 	];
 
 	/**
